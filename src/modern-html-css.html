@@ -17,28 +17,145 @@
     </style>
 </head>
 <body>
-    <textarea id="source">
-
+    <textarea id="source" style="display:none">
 class: center, middle
 
-# Title
+# Face of Modern Web-App
 
 ---
 
-# Agenda
+## What? Why?
 
-1. Introduction
-2. Deep-dive
-3. ...
+A lot of modern apps use the web browser for UI rendering. The last few years brought
+a bunch of changes/additions to used technologies. This is an overview of those
+changes/additions with small examples.
+
+<hr/>
+
+Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
 
 ---
 
-# Introduction
+# HTML5
+
+???
+* Gonna talk about presentation only, not programming APIs
+
+---
+
+## Scope
+
+We'll explore the following:
+
+* Semantic sectioning
+* Form extensions
+* Media inclusion
+* `iframe` sandboxing
+
+---
+
+## HTML5 - Paradigm Shift
+
+HTML5 changes were in general prompted by changes to what it was being used for and how.
+
+#### HTML 4.01 (1999)
+
+* Serving content-oriented web _pages_
+* Single static page contains single chunk of content
+* Interaction logic resides in back-end
+
+#### HTML5 (2014)
+
+* Serving interaction-oriented web _applications_
+* Interspersed content and interactions
+* Document can contain whole application and mutate continuously
+
+---
+
+## Semantic Sectioning
+
+HTML4 offered only rough & imprecise document structuring - heading hierarchy.
+HTML5 provides fleshed-out, modular document outline mechanism - sectioning.
+
+* Sectioning: `<body>`, `<section>`, `<article>`, `<aside>`, `<nav>`
+* Section-related: `<header>`, `<footer>`, `<address>`
+* Sectioning roots: `<blockquote>`, `<details>`, `<fieldset>`, `<figure>`, `<td>`
+
+Precise complex sectioning should help assistive technologies, readers, etc.
+
+---
+
+### HTML4 Outline
+
+```html
+<h1>Main Heading</h1>
+```
+
+---
+
+### HTML5 Outline
+
+```html
+
+```
+
+---
+
+## Form Extensions
+
+---
+
+## Media Inclusion
+
+---
+
+## IFrame sandboxing
+
+---
+
+## CSS3
+
+* what? (how? where?)
+* box-sizing
+* resets: initial, unset, all
+* calculations: calc, attr
+* colors
+* selectors, pseudo-elements
+* borders, backgrounds, shadows
+* fonts
+* transitions, animations, transforms
+* layouts: multi-column, flexbox, grid
+* future: scoped stylesheets, shapes, exclusions, masking, blending, fragmentation
+
+---
+
+## HTML + CSS
+
+* CSS preprocessors (Sass)
+* using edge features (autoprefixer)
+* CSS in JS
+
+---
+
+## Responsive UI
+
+* media queries!
+* font-relative & viewport-relative units
+* layout re-ordering
+
+---
+
+## Accessibility
+
+* sane structuring
+* WAI-ARIA
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
     <script>
-        var slideshow = remark.create();
+        var slideshow = remark.create({
+            highlightLine: true
+        });
     </script>
 </body>
 </html>
