@@ -1,3 +1,4 @@
+<!-- @formatter:off -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -205,19 +206,249 @@ maybe talk about browser support of HTLM5 features
 
 ---
 
-## CSS3
+# CSS3
 
-* what? (how? where?)
-* box-sizing
-* resets: initial, unset, all
-* calculations: calc, attr
-* colors
-* selectors, pseudo-elements
-* borders, backgrounds, shadows
-* fonts
-* transitions, animations, transforms
-* layouts: multi-column, flexbox, grid
-* future: scoped stylesheets, shapes, exclusions, masking, blending, fragmentation
+???
+CSS3 modules approved separately
+
+---
+
+## Scope
+
+* Box sizing
+* Selectors, pseudo-elements
+* Property resets
+* Colors, borders, backgrounds, shadows, fonts
+* Transitions, animations, transforms
+* Calculations
+* Layouts (columns, flexbox, grid)
+* ... peek into the future
+
+## Support
+
+* most features supported in stages, with prefixes
+* ... just use [autoprefixer](https://github.com/postcss/autoprefixer)
+
+---
+
+## Box Sizing
+
+Previously, block element `width` and `height` sized its content box. CSS3 (Basic UI Module)
+brings `box-sizing` property with an option to size the `border-box` instead.
+
+**This. Is. Awesome.**
+
+* borders no longer break relative sizing
+* padding no longer breaks relative sizing
+* sizing is sane(r)
+
+---
+
+## Selectors and Pseudo-Elements
+
+* attribute operators: `~=`, `^=`, `$=`, `*=`
+* position: `:nth-child(3n+2)`, `:nth-of-type(n)`, `:last-child`, `:only-child`,
+    `:only-of-type` (plus `*-last-*` variants), `:root`
+* UI state: `:enabled`, `:disabled`, `:read-only`, `:read-write`, `:checked`,
+    `:indeterminate`, `:valid`, `:invalid`, `:required`
+* empty node: `:empty`
+* current target: `:target`
+* negation: `:not`
+* any sibling: `~`
+* `::` for pseudo-elements (`::before`, `::after`, `::first-line`, ...)
+
+---
+
+## Property Resets
+
+* `initial`, `unset` values for all properties
+* `all` property for blanket reset
+
+## New Units
+
+* font-relative: `rem`, `ch`
+* viewport-relative: `vw`, `vh`, `vmax`, `vmin`
+
+---
+
+## Colors
+
+Colors can now be semi-transparent. Yeah.
+
+* `opacity` property
+* `rgb()`, `rgba()`, `hsl()`, `hsla()` notations
+* `transparent` keyword
+* `currentColor` keyword
+* <del>system colors</del>
+
+---
+
+## Backgrounds, Borders, Shadows
+
+* use generated images on background/border
+    * `linear-gradient()`, `radial-gradient()`, `repeated-*-gradient()`)
+    * `border-image`, `border-image-slice`, `border-image-outset`, ...
+* multiple backgrounds
+* `background-repeat` values `round` & `space` (image fitting)
+* `background-origin`, `background-size`, `background-clip` properties
+* round corners with `border-radius`
+* `box-shadow`
+
+???
+`background-origin`: `content-box`, `padding-box`, `border-box`
+
+---
+
+## Typography
+
+* import fonts with `@font-face`
+* `font-kerning`, `font-feature-settings`, `font-size-adjust`, `font-language-override`
+* `font-stretch`, `font-variant-alternates`, `font-variant-caps`, ... (plus `@font-feature-values`)
+
+* `text-decoration`: `-line`, `-color`, `-style`, plus `text-underline-position`
+* `text-emphasis`: `-color`, `-style`, `-position`
+* `text-shadow`
+
+* `text-overflow`
+
+---
+
+## Transforms
+
+* 2-dimensional transforms
+    * properties: `transform`, `transform-origin`
+    * transforms: `matrix()`, `translate()`, `scale()`, `rotate()`, `skewX()`, `skewY()`
+* 3-dimensional transforms
+    * properties: `transform-style`, `perspective`, `perspective-origin`, `backface-visibility`
+    * transforms: `matrix3d()`, `translate3d()`, `scale3d()`, `rotate3d()`, `perspective()`
+
+---
+
+## Transitions, Animations
+
+* `transition` property value on selector match
+
+    ```css
+    transition: background-color 4s ease-in 1s, ...;
+    ```
+    (`transition-property`, `-duration`, `-timing-function`, `-delay`)
+* create `animation` by defining keyframes and run it (repeatedly)
+
+    ```css
+    @keyframes shake {
+        0% { top: 0; left: 0 }
+        20% { top -3px; left: -2px; }
+        ...
+    }
+    animation: 4s ease-in 1s 3 normal both running shake;
+    ```
+    (`animation-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`,
+    `-fill-mode`, `-play-state`, `-name`)
+
+---
+
+## Calculations
+
+Property values can be computed
+
+* from attribute values
+
+    ```css
+    content: attr(src url, '');
+    ```
+* by resolving an expression
+
+    ```css
+    width: calc(100% - 20px);
+    ```
+* by looping through a list instead of inheritance
+
+    ```css
+    list-style-type: toggle(disc, circle, square, box);
+    ```
+
+---
+
+## Layouts
+
+Up until now, only two layout modes were used:
+
+* flow (`display: inline | inline-block`)
+* block (`display: block`)
+
+with text being `inline` by default. They follow the scroll model by default (meant
+for viewing text on a screen) or book model with some additional properties (for print).
+CSS3 brings some brand new layout modes:
+
+* multi-column (enhanced flow)
+* flexbox
+* grid
+
+---
+
+### Columns
+
+Breaking basic flow into multiple columns increases readability of text on wide
+screens (any computer screen nowadays). Columns are established using
+
+* `column-width`, `column-count`, and `column-fill` for basic layout
+* `column-gap`, `column-rule` for spacing
+* `column-span` for exceptions
+* `break-before`, `break-inside`, and `break-after` for breaking adjustments
+
+---
+
+### Flexbox
+
+Flexbox layout attempts to divide element's real estate proportionally between
+its children. Final space distribution is computed by combining parent properties
+
+* `display: flex | inline-flex`
+* `flex-flow` (`flex-direction`, `-wrap`)
+* `align-items`, `justify-content`
+
+with properties of the children
+
+* `flex` (`flex-grow`, `-shrink`, `-basis`)
+* `order`
+
+---
+
+### Flexbox: Vocabulary
+
+<img src="./flex_terms.png">
+
+---
+
+### Flexbox: Responsive Re-Order
+
+<img src="./HolyGrailLayout.png">
+
+---
+
+### Grid (Future)
+
+Grid layout allows super-imposing the container with a virtual grid and then placing
+the children onto specific cells (or groups of cells) of that grid. It's once again
+a combination of parent properties
+
+* `display: grid | inline-grid`
+* `grid-definition-columns`, `grid-definition-rows`
+
+and child properties
+
+* `grid-row` and `grid-column` (`*-position`, `*-span`) for position
+* `grid-row-align`, `grid-column-align` for alignment
+
+---
+
+### Coming Soon &trade;
+
+* `<style scoped>`
+* float shapes
+* flow regions & exclusions
+* masking & blending
+* ...
 
 ---
 
