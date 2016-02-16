@@ -222,12 +222,17 @@ CSS3 modules approved separately
 * Transitions, animations, transforms
 * Calculations
 * Layouts (columns, flexbox, grid)
-* ... peek into the future
+* Coming soon &trade;
+* Preprocessors
+* Responsive layouts
+
+---
 
 ## Support
 
 * most features supported in stages, with prefixes
 * ... just use [autoprefixer](https://github.com/postcss/autoprefixer)
+* `@supports` at-rule
 
 ---
 
@@ -444,6 +449,7 @@ and child properties
 
 ### Coming Soon &trade;
 
+* variables
 * `<style scoped>`
 * float shapes
 * flow regions & exclusions
@@ -452,26 +458,34 @@ and child properties
 
 ---
 
-## HTML + CSS
+## CSS Preprocessors
 
-* CSS preprocessors (Sass)
-* using edge features (autoprefixer)
-* CSS in JS
+* basically [Sass](http://sass-lang.com/) (SCSS) or [Less](http://lesscss.org/) these days
+* bring abstractions into stylesheets
+
+    nesting, variables, mixins, imports, operations, functions, control flow, ...
+
+## CSS in JS
+
+* work around inherent CSS problems:
+
+    globals, dead code, non-deterministic resolution, sharing constants
 
 ---
 
-## Responsive UI
+## Responsive Layouts
 
-* media queries!
 * font-relative & viewport-relative units
+
+    `rem`, `ch`, `vh`, `vw`, `vmin`, `vmax`
+* media queries! (with nested at-rules now)
 * layout re-ordering
 
 ---
 
-## Accessibility
+# Accessibility
 
-* sane structuring
-* WAI-ARIA
+semantic tags + WAI-ARIA
 
     </script>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
