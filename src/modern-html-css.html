@@ -28,18 +28,21 @@ class: center, middle
 
 A lot of modern apps use the web browser for UI rendering. The last few years brought
 a bunch of changes/additions to used technologies. This is an overview of those
-changes/additions with small examples.
+changes/additions.
 
 <hr/>
 
 Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
+
+???
+assumes familiarity with basics of HTML/CSS
 
 ---
 
 # HTML5
 
 ???
-* Gonna talk about presentation only, not programming APIs
+* gonna talk about presentation only, not programming APIs
 
 ---
 
@@ -88,28 +91,117 @@ Precise complex sectioning should help assistive technologies, readers, etc.
 ### HTML4 Outline
 
 ```html
-<h1>Main Heading</h1>
+<div class="section" id="forest-elephants" >
+*  <h1>Forest elephants</h1>
+  <p>In this section, we discuss the lesser known forest elephants.
+    ...this section continues...</p>
+  <div class="subsection" id="forest-habitat" >
+*    <h2>Habitat</h2>
+    <p>Forest elephants do not live in trees but among them.
+     ...this subsection continues...</p>
+  </div>
+*  <h3>Mongolian gerbils</h2>
+  <p>In this section, we discuss the famous mongolian gerbils.
+   ...this subsection continues...</p>
+</div>
 ```
+
+1. Forest elephants
+    1. Habitat
+        1. Mongolian gerbils
 
 ---
 
 ### HTML5 Outline
 
 ```html
-
+<section>
+*  <h1>Forest elephants</h1>
+  <p>In this section, we discuss the lesser known forest elephants.
+    ...this section continues...</p>
+  <section>
+*    <h2>Habitat</h2>
+    <p>Forest elephants do not live in trees but among them.
+        ...this subsection continues...</p>
+  </section>
+</section>
+<section>
+*  <h3>Mongolian gerbils</h3>
+  <p>In this section, we discuss the famous mongolian gerbils.
+     ...this section continues...</p
+</section>
 ```
+
+1. Forest elephants
+    1. Habitat
+1. Mongolian gerbils
+
+???
+mention `<aside>` & `<nav>` (outside outline) and sectioning roots, if not explained already
 
 ---
 
 ## Form Extensions
 
+Various form features have been added directly to HTML5 to provide unified experience across
+devices & make sense even to screen readers.
+
+* new input types: `email`, `date`, `color`, `number`, `range`, `search`, `tel`, `time`, `url`, ...
+* new attributes: `placeholder`, `autofocus`, `autocomplete`, `list`, `autosave`, `form`, ...
+* validation: `min`, `max`, `minlength`, `maxlength`, `pattern`, `required`, ...
+
+Scripting is no longer required for most of the form behavior patterns.
+
 ---
 
 ## Media Inclusion
 
+HTML5 recognizes the need for direct embedding of media and their consumption on various
+types of devices.
+
+Efficient image import:
+```html
+<picture>
+    <source srcset="sample-image-m.png,600w">
+    <source srcset="sample-image-xl.png" media="(min-width: 1200px)">
+    <source srcset="sample-image-xxl.png,1600w,2x">
+    <img src="sample-image.png" alt="sample image">
+</video>
+```
+
+Audio/video embedding:
+```html
+<video controls preload="auto" loop autoplay>
+    <source src="sample-video.ogv" type="video/ogv; codecs=dirac, speex">
+    <source src="sample-video.mp4" type="video/mp4">
+    Your browser does not support the <code>video</code> element.
+</video>
+```
+
 ---
 
 ## IFrame sandboxing
+
+`<iframe>` received some upgrades allowing easy sandboxing or document nesting.
+
+* `sandbox` - restriction flags like `allow-scripts`, `allow-forms`, `allow-modals`, `allow-same-origin`, ...
+* `seamless` - seamless integration (styles, links, ...)
+* `srcdoc` - provide content directly
+
+Using all of the above allows e.g. seamlessly embedding 3rd party content, sandboxing ads or `eval()`,
+scoping stylesheets, etc.
+
+---
+
+## More...
+
+* `<mark>`, `<figure>`, `<data>`, `<time>`, `<output>`, `<progress>`, `<main>`, ...
+* web sockets, push events, offline cache, persistent storage, canvas, webGL, SVG, ...
+
+[... ... ... MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+
+???
+maybe talk about browser support of HTLM5 features
 
 ---
 
