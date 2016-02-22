@@ -7,38 +7,67 @@
     <style>
         @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
         @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
         body { font-family: 'Droid Serif'; }
         h1, h2, h3 {
             font-family: 'Yanone Kaffeesatz';
             font-weight: normal;
         }
-        .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+        .remark-code, .remark-inline-code {
+            font-family: 'Inconsolata';
+            font-weight: bold;
+        }
+        .remark-inline-code {
+            color: #333;
+        }
+
+        li + li,
+        li li:first-child {
+            margin-top: 0.5em;
+        }
+        li > pre {
+            margin: 0.5em 0;
+        }
+        .footnote {
+            border-top: 1px solid silver;
+            bottom: 12px;
+            padding-top: 12px;
+            position: absolute;
+            width: calc(100% - 16em);
+        }
     </style>
 </head>
 <body>
     <script id="source" type="text/markdown">
+layout: true
+name: section-start
 class: center, middle
+
+
+---
+template: section-start
 
 # Face of Modern Web-App
 
 ---
+layout: false
 
 ## What? Why?
 
 A lot of modern apps use the web browser for UI rendering. The last few years brought
 a bunch of changes/additions to used technologies. This is an overview of those
-changes/additions.
+changes.
 
-<hr/>
-
+.footnote[
 Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
+]
 
 ???
 assumes familiarity with basics of HTML/CSS
 
 ---
+template: section-start
 
 # HTML5
 
@@ -81,8 +110,10 @@ HTML5 changes were in general prompted by changes to what it was being used for 
 HTML4 offered only rough & imprecise document structuring - heading hierarchy.
 HTML5 provides fleshed-out, modular document outline mechanism - sectioning.
 
-* Sectioning: `<body>`, `<section>`, `<article>`, `<aside>`, `<nav>`
-* Section-related: `<header>`, `<footer>`, `<address>`
+* Sections
+    * Outline: `<body>`, `<section>`, `<article>`
+    * Outside outline: `<aside>`, `<nav>`
+* Belong to section: `<header>`, `<footer>`, `<address>`
 * Sectioning roots: `<blockquote>`, `<details>`, `<fieldset>`, `<figure>`, `<td>`
 
 Precise complex sectioning should help assistive technologies, readers, etc.
@@ -93,15 +124,15 @@ Precise complex sectioning should help assistive technologies, readers, etc.
 
 ```html
 <div class="section" id="forest-elephants" >
-*  <h1>Forest elephants</h1>
+* <h1>Forest elephants</h1>
   <p>In this section, we discuss the lesser known forest elephants.
     ...this section continues...</p>
   <div class="subsection" id="forest-habitat" >
-*    <h2>Habitat</h2>
+*   <h2>Habitat</h2>
     <p>Forest elephants do not live in trees but among them.
      ...this subsection continues...</p>
   </div>
-*  <h3>Mongolian gerbils</h2>
+* <h3>Mongolian gerbils</h3>
   <p>In this section, we discuss the famous mongolian gerbils.
    ...this subsection continues...</p>
 </div>
@@ -117,19 +148,20 @@ Precise complex sectioning should help assistive technologies, readers, etc.
 
 ```html
 <section>
-*  <h1>Forest elephants</h1>
-  <p>In this section, we discuss the lesser known forest elephants.
-    ...this section continues...</p>
+* <h1>Forest elephants</h1>
+  <p>... section content ...</p>
   <section>
-*    <h2>Habitat</h2>
-    <p>Forest elephants do not live in trees but among them.
-        ...this subsection continues...</p>
+*   <h2>Habitat</h2>
+    <p>... section content ...</p>
   </section>
 </section>
+<aside>
+* <h1>Endangered species</h1>
+  <p>... aside content ...</p>
+</aside>
 <section>
-*  <h3>Mongolian gerbils</h3>
-  <p>In this section, we discuss the famous mongolian gerbils.
-     ...this section continues...</p
+* <h3>Mongolian gerbils</h3>
+  <p>... section content ...</p
 </section>
 ```
 
@@ -152,6 +184,39 @@ devices & make sense even to screen readers.
 * validation: `min`, `max`, `minlength`, `maxlength`, `pattern`, `required`, ...
 
 Scripting is no longer required for most of the form behavior patterns.
+
+---
+
+### Sample Form
+
+```html
+<form id="user">
+    Name: <input required autofocus autosave>
+    <div class="validation-error">Enter your full name.</div>
+
+    Title: <input list="titles">
+
+    E-mail: <input type="email" required>
+    <div class="validation-error">Enter a valid e-mail address.</div>
+
+    Age: <input type="number" min="18" max="130">
+
+    Favorite color: <input type="color">
+
+    Tags: <input placeholder="Enter tags..."
+                 pattern="^((\w+)(,\s*(\w+))*)?$">
+    <div class="validation-error">Enter one or more tags separated by comma.</div>
+
+    <button type="submit">Save</button>
+</form>
+<datalist id="titles">
+    <option value="Mr.">
+    <option value="Ms.">
+</datalist>
+<div class="dropdown-body">
+    <textarea form="user"></textarea>
+</div>
+```
 
 ---
 
@@ -199,12 +264,13 @@ scoping stylesheets, etc.
 * `<mark>`, `<figure>`, `<data>`, `<time>`, `<output>`, `<progress>`, `<main>`, ...
 * web sockets, push events, offline cache, persistent storage, canvas, webGL, SVG, ...
 
-[... ... ... MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+[... see MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
 
 ???
 maybe talk about browser support of HTLM5 features
 
 ---
+template: section-start
 
 # CSS3
 
@@ -215,6 +281,8 @@ CSS3 modules approved separately
 
 ## Scope
 
+We'll explore the following:
+
 * Box sizing
 * Selectors, pseudo-elements
 * Property resets
@@ -222,7 +290,7 @@ CSS3 modules approved separately
 * Transitions, animations, transforms
 * Calculations
 * Layouts (columns, flexbox, grid)
-* Coming soon &trade;
+* ... coming soon&trade;
 * Preprocessors
 * Responsive layouts
 
@@ -230,7 +298,7 @@ CSS3 modules approved separately
 
 ## Support
 
-* most features supported in stages, with prefixes
+* most features supported in stages (prefixed until stable)
 * ... just use [autoprefixer](https://github.com/postcss/autoprefixer)
 * `@supports` at-rule
 
@@ -240,6 +308,8 @@ CSS3 modules approved separately
 
 Previously, block element `width` and `height` sized its content box. CSS3 (Basic UI Module)
 brings `box-sizing` property with an option to size the `border-box` instead.
+
+<img src="./box-sizing-comparison.png" style="width: 80%; margin: auto; display: block;">
 
 **This. Is. Awesome.**
 
@@ -262,42 +332,81 @@ brings `box-sizing` property with an option to size the `border-box` instead.
 * any sibling: `~`
 * `::` for pseudo-elements (`::before`, `::after`, `::first-line`, ...)
 
+???
+* `:target` references anchor corresponding to current URL
+
 ---
 
 ## Property Resets
 
 * `initial`, `unset` values for all properties
-* `all` property for blanket reset
+    * `initial` resets to default property value (from CSS spec)
+    * `unset` sets to `inherit` on inherited properties, `initial` otherwise
+* `all` pseudo-property for blanket reset
+
+```css
+.widget { all: initial; /* ... */ }
+.widget .part { all: unset; /* ... */ }
+```
 
 ## New Units
 
 * font-relative: `rem`, `ch`
 * viewport-relative: `vw`, `vh`, `vmax`, `vmin`
 
+```css
+.truncated-text { max-width: 50ch; /* ... */ }
+.fitted-image { max-height: 1vmin; max-width: 1vmin; /* ... */ }
+```
+
+???
+* `rem` == root `em`
+* `ch` == character width (of `0` character)
+
 ---
 
 ## Colors
 
-Colors can now be semi-transparent. Yeah.
+Both colors and whole elements can now be semi-transparent!
 
-* `opacity` property
 * `rgb()`, `rgba()`, `hsl()`, `hsla()` notations
-* `transparent` keyword
+* `transparent` keyword = `rgba(0,0,0,0)`
 * `currentColor` keyword
+* `opacity` property
 * <del>system colors</del>
+
+Layers are combined using simple alpha compositing.
+
+<br>
+
+```css
+.funky-text { color: rgba(255,0,220,0.7); }
+.quoted { border-left: 2px solid currentColor; }
+:disabled { opacity: 0.3; }
+```
 
 ---
 
 ## Backgrounds, Borders, Shadows
 
-* use generated images on background/border
+* generate images
     * `linear-gradient()`, `radial-gradient()`, `repeated-*-gradient()`)
+* use images as borders
     * `border-image`, `border-image-slice`, `border-image-outset`, ...
 * multiple backgrounds
-* `background-repeat` values `round` & `space` (image fitting)
+* `background-repeat` values `round` & `space`
+    * prevent background image clipping
 * `background-origin`, `background-size`, `background-clip` properties
 * round corners with `border-radius`
 * `box-shadow`
+
+```css
+.glass::after {
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0) 50%, rgba(255,255,255,0.3));
+    /* ... (absolutely position over the element) */
+}
+```
 
 ???
 `background-origin`: `content-box`, `padding-box`, `border-box`
@@ -310,11 +419,23 @@ Colors can now be semi-transparent. Yeah.
 * `font-kerning`, `font-feature-settings`, `font-size-adjust`, `font-language-override`
 * `font-stretch`, `font-variant-alternates`, `font-variant-caps`, ... (plus `@font-feature-values`)
 
+
 * `text-decoration`: `-line`, `-color`, `-style`, plus `text-underline-position`
-* `text-emphasis`: `-color`, `-style`, `-position`
+* `text-emphasis` (per-character decoration): `-color`, `-style`, `-position`
 * `text-shadow`
 
+
 * `text-overflow`
+
+```css
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  src: local('Yanone Kaffeesatz Regular'),
+      url('https://fonts.gstatic.com/...') format('woff2');
+}
+a:hover { text-decoration-style: dashed; }
+.single-line { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+```
 
 ---
 
@@ -327,17 +448,28 @@ Colors can now be semi-transparent. Yeah.
     * properties: `transform-style`, `perspective`, `perspective-origin`, `backface-visibility`
     * transforms: `matrix3d()`, `translate3d()`, `scale3d()`, `rotate3d()`, `perspective()`
 
+<br>
+```css
+.stack { position: relative; }
+.stack > .card { position: absolute; top: 0; left: 0; }
+.stack > .card:nth-child(n+1) { transform: translate(1em,1em); }
+.stack > .card:nth-child(n+2) { transform: translate(2em,2em); }
+/* ... */
+```
+
 ---
 
 ## Transitions, Animations
 
 * `transition` property value on selector match
+    * `transition-property`, `-duration`, `-timing-function`, `-delay`
 
     ```css
-    transition: background-color 4s ease-in 1s, ...;
+    button:hover { transition: background-color 4s ease-in 1s, ...; }
     ```
-    (`transition-property`, `-duration`, `-timing-function`, `-delay`)
 * create `animation` by defining keyframes and run it (repeatedly)
+    * `animation-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`,
+    `-fill-mode`, `-play-state`, `-name`
 
     ```css
     @keyframes shake {
@@ -345,43 +477,42 @@ Colors can now be semi-transparent. Yeah.
         20% { top -3px; left: -2px; }
         ...
     }
-    animation: 4s ease-in 1s 3 normal both running shake;
+    .icon:hover { animation: 4s ease-in 1s 3 normal both running shake; }
     ```
-    (`animation-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`,
-    `-fill-mode`, `-play-state`, `-name`)
 
 ---
 
 ## Calculations
 
-Property values can be computed
+Property values can be computed:
 
 * from attribute values
 
     ```css
-    content: attr(src url, '');
+    a:hover::after { content: attr(src url, ''); }
     ```
 * by resolving an expression
 
     ```css
-    width: calc(100% - 20px);
+    .grid-item { width: calc(40% - 20px); }
     ```
 * by looping through a list instead of inheritance
 
     ```css
-    list-style-type: toggle(disc, circle, square, box);
+    ul > li { list-style-type: toggle(disc, circle, square, box); }
     ```
 
 ---
 
 ## Layouts
 
-Up until now, only two layout modes were used:
+Up until now, only the basic layout modes were used:
 
 * flow (`display: inline | inline-block`)
 * block (`display: block`)
+* ... plus table layout, positioned layout
 
-with text being `inline` by default. They follow the scroll model by default (meant
+with `inline` being the default. They follow the scroll model by default (meant
 for viewing text on a screen) or book model with some additional properties (for print).
 CSS3 brings some brand new layout modes:
 
@@ -401,6 +532,13 @@ screens (any computer screen nowadays). Columns are established using
 * `column-span` for exceptions
 * `break-before`, `break-inside`, and `break-after` for breaking adjustments
 
+<br>
+```css
+.article-body { columns: 3; column-gap: 2ch; }
+.article-body figure { break-inside: avoid-column; }
+.article-body figure.large { column-span: all; }
+```
+
 ---
 
 ### Flexbox
@@ -416,6 +554,13 @@ with properties of the children
 
 * `flex` (`flex-grow`, `-shrink`, `-basis`)
 * `order`
+
+<br>
+```css
+body { display: flex; flex-flow: column nowrap; }
+body > header, body > footer { flex: 0 0 auto; }
+body > main { flex: 1 1 0px; }
+```
 
 ---
 
@@ -447,10 +592,16 @@ and child properties
 
 ---
 
-### Coming Soon &trade;
+### Coming Soon&trade;
 
 * variables
-* `<style scoped>`
+
+    ```css
+    :root { --paragraph-font-size: 14px; }
+    aside { --paragraph-font-size: 12px; }
+    p { font-size: var(--paragraph-font-size); }
+    ```
+* `<style scoped>` (apply only to parent element)
 * float shapes
 * flow regions & exclusions
 * masking & blending
@@ -481,11 +632,30 @@ and child properties
 * media queries! (with nested at-rules now)
 * layout re-ordering
 
+<br>
+```css
+main { flex-flow: row; }
+main > article { order: 2; }
+main > nav { order: 1 }
+main > aside { order: 3 }
+
+@media all and (max-width: 640px) {
+  main { flex-flow: column; }
+  main > article, main > nav, main > aside { order: 0; }
+}
+```
+
 ---
+template: section-start
 
 # Accessibility
 
 semantic tags + WAI-ARIA
+
+---
+template: section-start
+
+&boxtimes;
 
     </script>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
