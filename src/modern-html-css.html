@@ -18,6 +18,9 @@
             font-family: 'Inconsolata';
             font-weight: bold;
         }
+        .remark-code {
+            text-align: left;
+        }
         .remark-inline-code {
             color: #333;
         }
@@ -34,6 +37,7 @@
             bottom: 12px;
             padding-top: 12px;
             position: absolute;
+            text-align: left;
             width: calc(100% - 16em);
         }
     </style>
@@ -58,10 +62,6 @@ layout: false
 A lot of modern apps use the web browser for UI rendering. The last few years brought
 a bunch of changes/additions to used technologies. This is an overview of those
 changes.
-
-.footnote[
-Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
-]
 
 ???
 assumes familiarity with basics of HTML/CSS
@@ -652,10 +652,33 @@ template: section-start
 
 semantic tags + WAI-ARIA
 
+<br>
+```html
+<ul role="tablist">
+  <li role="presentation">
+    <a href="#section1" role="tab" aria-controls="section1" aria-selected="true">
+        Section 1</a>
+  </li>
+  <li role="presentation">
+    <a href="#section2" role="tab" aria-controls="section2">Section 2</a>
+  </li>
+  <li role="presentation">
+    <a href="#section3" role="tab" aria-controls="section3">Section 3</a>
+  </li>
+</ul>
+<section id="section1" role="tabpanel">...</section>
+<section id="section2" role="tabpanel" aria-hidden="true">...</section>
+<section id="section3" role="tabpanel" aria-hidden="true">...</section>
+```
+
 ---
 template: section-start
 
 &boxtimes;
+
+.footnote[
+Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
+]
 
     </script>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
