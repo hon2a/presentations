@@ -97,6 +97,8 @@ HTML5 changes were in general prompted by changes to what it was being used for 
 * Single static page contains single chunk of content
 * Interaction logic resides in back-end
 
+--
+
 #### HTML5 (2014)
 
 * Serving interaction-oriented web _applications_
@@ -110,10 +112,15 @@ HTML5 changes were in general prompted by changes to what it was being used for 
 HTML4 offered only rough & imprecise document structuring - heading hierarchy.
 HTML5 provides fleshed-out, modular document outline mechanism - sectioning.
 
+--
+
 * Sections
     * Outline: `<body>`, `<section>`, `<article>`
     * Outside outline: `<aside>`, `<nav>`
+--
 * Belong to section: `<header>`, `<footer>`, `<address>`
+
+--
 * Sectioning roots: `<blockquote>`, `<details>`, `<fieldset>`, `<figure>`, `<td>`
 
 Precise complex sectioning should help assistive technologies, readers, etc.
@@ -132,9 +139,11 @@ Precise complex sectioning should help assistive technologies, readers, etc.
     <p>Forest elephants do not live in trees but among them.
      ...this subsection continues...</p>
   </div>
+  <!------ START import from somewhere else: ------>
 * <h3>Mongolian gerbils</h3>
   <p>In this section, we discuss the famous mongolian gerbils.
    ...this subsection continues...</p>
+  <!------ END import ------>
 </div>
 ```
 
@@ -235,6 +244,7 @@ Efficient image import:
 </video>
 ```
 
+--
 Audio/video embedding:
 ```html
 <video controls preload="auto" loop autoplay>
@@ -244,6 +254,8 @@ Audio/video embedding:
 </video>
 ```
 
+Supported formats differ between browsers!
+
 ---
 
 ## IFrame sandboxing
@@ -251,8 +263,14 @@ Audio/video embedding:
 `<iframe>` received some upgrades allowing easy sandboxing or document nesting.
 
 * `sandbox` - restriction flags like `allow-scripts`, `allow-forms`, `allow-modals`, `allow-same-origin`, ...
+
+--
 * `seamless` - seamless integration (styles, links, ...)
+
+--
 * `srcdoc` - provide content directly
+
+--
 
 Using all of the above allows e.g. seamlessly embedding 3rd party content, sandboxing ads or `eval()`,
 scoping stylesheets, etc.
@@ -261,8 +279,13 @@ scoping stylesheets, etc.
 
 ## More...
 
-* `<mark>`, `<figure>`, `<data>`, `<time>`, `<output>`, `<progress>`, `<main>`, ...
-* web sockets, push events, offline cache, persistent storage, canvas, webGL, SVG, ...
+* other HTML extensions
+    * `<mark>`, `<figure>`, `<data>`, `<time>`, `<output>`, `<progress>`, `<main>`, ...
+
+--
+
+* new APIs
+    * web sockets, push events, offline cache, persistent storage, canvas, webGL, SVG, ...
 
 [... see MDN](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
 
@@ -299,8 +322,14 @@ We'll explore the following:
 ## Support
 
 * most features supported in stages (prefixed until stable)
-* ... just use [autoprefixer](https://github.com/postcss/autoprefixer)
+
+    &rarr; just use [autoprefixer](https://github.com/postcss/autoprefixer)
+
+--
 * `@supports` at-rule
+
+--
+* old browsers are being rapidly dropped
 
 ---
 
@@ -310,6 +339,8 @@ Previously, block element `width` and `height` sized its content box. CSS3 (Basi
 brings `box-sizing` property with an option to size the `border-box` instead.
 
 <img src="./box-sizing-comparison.png" style="width: 80%; margin: auto; display: block;">
+
+--
 
 **This. Is. Awesome.**
 
@@ -322,13 +353,23 @@ brings `box-sizing` property with an option to size the `border-box` instead.
 ## Selectors and Pseudo-Elements
 
 * attribute operators: `~=`, `^=`, `$=`, `*=`
+
+--
 * position: `:nth-child(3n+2)`, `:nth-of-type(n)`, `:last-child`, `:only-child`,
     `:only-of-type` (plus `*-last-*` variants), `:root`
+
+--
 * UI state: `:enabled`, `:disabled`, `:read-only`, `:read-write`, `:checked`,
     `:indeterminate`, `:valid`, `:invalid`, `:required`
+
+--
 * empty node: `:empty`
 * current target: `:target`
+
+--
 * negation: `:not`
+
+--
 * any sibling: `~`
 * `::` for pseudo-elements (`::before`, `::after`, `::first-line`, ...)
 
@@ -348,6 +389,8 @@ brings `box-sizing` property with an option to size the `border-box` instead.
 .widget { all: initial; /* ... */ }
 .widget .part { all: unset; /* ... */ }
 ```
+
+--
 
 ## New Units
 
@@ -372,13 +415,14 @@ Both colors and whole elements can now be semi-transparent!
 * `rgb()`, `rgba()`, `hsl()`, `hsla()` notations
 * `transparent` keyword = `rgba(0,0,0,0)`
 * `currentColor` keyword
-* `opacity` property
 * <del>system colors</del>
+
+--
+* `opacity` property
 
 Layers are combined using simple alpha compositing.
 
 <br>
-
 ```css
 .funky-text { color: rgba(255,0,220,0.7); }
 .quoted { border-left: 2px solid currentColor; }
@@ -391,12 +435,20 @@ Layers are combined using simple alpha compositing.
 
 * generate images
     * `linear-gradient()`, `radial-gradient()`, `repeated-*-gradient()`)
+
+--
 * use images as borders
     * `border-image`, `border-image-slice`, `border-image-outset`, ...
+
+--
 * multiple backgrounds
+
+--
 * `background-repeat` values `round` & `space`
     * prevent background image clipping
 * `background-origin`, `background-size`, `background-clip` properties
+
+--
 * round corners with `border-radius`
 * `box-shadow`
 
@@ -419,11 +471,13 @@ Layers are combined using simple alpha compositing.
 * `font-kerning`, `font-feature-settings`, `font-size-adjust`, `font-language-override`
 * `font-stretch`, `font-variant-alternates`, `font-variant-caps`, ... (plus `@font-feature-values`)
 
+--
 
 * `text-decoration`: `-line`, `-color`, `-style`, plus `text-underline-position`
 * `text-emphasis` (per-character decoration): `-color`, `-style`, `-position`
 * `text-shadow`
 
+--
 
 * `text-overflow`
 
@@ -467,6 +521,8 @@ a:hover { text-decoration-style: dashed; }
     ```css
     button:hover { transition: background-color 4s ease-in 1s, ...; }
     ```
+
+--
 * create `animation` by defining keyframes and run it (repeatedly)
     * `animation-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`,
     `-fill-mode`, `-play-state`, `-name`
@@ -491,11 +547,15 @@ Property values can be computed:
     ```css
     a:hover::after { content: attr(src url, ''); }
     ```
+
+--
 * by resolving an expression
 
     ```css
     .grid-item { width: calc(40% - 20px); }
     ```
+
+--
 * by looping through a list instead of inheritance
 
     ```css
@@ -514,6 +574,9 @@ Up until now, only the basic layout modes were used:
 
 with `inline` being the default. They follow the scroll model by default (meant
 for viewing text on a screen) or book model with some additional properties (for print).
+
+--
+
 CSS3 brings some brand new layout modes:
 
 * multi-column (enhanced flow)
@@ -684,6 +747,7 @@ Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.g
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
     <script>
         var slideshow = remark.create({
+            countIncrementalSlides: false,
             highlightLines: true
         });
     </script>
