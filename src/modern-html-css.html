@@ -14,6 +14,21 @@
             font-family: 'Yanone Kaffeesatz';
             font-weight: normal;
         }
+        a {
+            color: cornflowerblue;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        li + li,
+        li li:first-child {
+            margin-top: 0.5em;
+        }
+        li > pre {
+            margin: 0.5em 0;
+        }
+
         .remark-code, .remark-inline-code {
             font-family: 'Inconsolata';
             font-weight: bold;
@@ -25,13 +40,6 @@
             color: #333;
         }
 
-        li + li,
-        li li:first-child {
-            margin-top: 0.5em;
-        }
-        li > pre {
-            margin: 0.5em 0;
-        }
         .footnote {
             border-top: 1px solid silver;
             bottom: 12px;
@@ -39,6 +47,20 @@
             position: absolute;
             text-align: left;
             width: calc(100% - 16em);
+        }
+        .half {
+            float: left;
+            width: 49%;
+        }
+        .half .remark-code.hljs {
+            overflow: hidden;
+            zoom: 0.8;
+        }
+        .half:nth-child(2n) {
+            margin-left: 2%;
+        }
+        .red {
+            color: red;
         }
     </style>
 </head>
@@ -48,11 +70,10 @@ layout: true
 name: section-start
 class: center, middle
 
-
 ---
 template: section-start
 
-# Face of Modern Web-App
+# Modern HTML/CSS
 
 ---
 layout: false
@@ -71,9 +92,6 @@ template: section-start
 
 # HTML5
 
-???
-* gonna talk about presentation only, not programming APIs
-
 ---
 
 ## Scope
@@ -85,11 +103,16 @@ We'll explore the following:
 * Media inclusion
 * `iframe` sandboxing
 
+???
+* gonna talk about presentation only, not programming APIs
+
 ---
 
 ## HTML5 - Paradigm Shift
 
 HTML5 changes were in general prompted by changes to what it was being used for and how.
+
+--
 
 #### HTML 4.01 (1999)
 
@@ -127,32 +150,37 @@ Precise complex sectioning should help assistive technologies, readers, etc.
 
 ---
 
+.half[
 ### HTML4 Outline
 
 ```html
-<div class="section" id="forest-elephants" >
+<div class="section">
 * <h1>Forest elephants</h1>
-  <p>In this section, we discuss the lesser known forest elephants.
-    ...this section continues...</p>
-  <div class="subsection" id="forest-habitat" >
+  <p>... section content ...</p>
+  <div class="subsection">
 *   <h2>Habitat</h2>
-    <p>Forest elephants do not live in trees but among them.
-     ...this subsection continues...</p>
+    <p>... section content ...</p>
   </div>
-  <!------ START import from somewhere else: ------>
-* <h3>Mongolian gerbils</h3>
-  <p>In this section, we discuss the famous mongolian gerbils.
-   ...this subsection continues...</p>
-  <!------ END import ------>
 </div>
+<div class="aside">
+* <h1>Endangered species</h1>
+  <p>... aside content ...</p>
+</div>
+<!------ START import from somewhere ------>
+<div class="section">
+* <h3>Mongolian gerbils</h3>
+  <p>... section content ...</p>
+</div>
+<!------ END import ------>
 ```
 
 1. Forest elephants
     1. Habitat
-        1. Mongolian gerbils
+1. Endangered species
+    1. Mongolian gerbils
+]
 
----
-
+.half[
 ### HTML5 Outline
 
 ```html
@@ -177,6 +205,7 @@ Precise complex sectioning should help assistive technologies, readers, etc.
 1. Forest elephants
     1. Habitat
 1. Mongolian gerbils
+]
 
 ???
 mention `<aside>` & `<nav>` (outside outline) and sectioning roots, if not explained already
@@ -234,6 +263,8 @@ Scripting is no longer required for most of the form behavior patterns.
 HTML5 recognizes the need for direct embedding of media and their consumption on various
 types of devices.
 
+--
+
 Efficient image import:
 ```html
 <picture>
@@ -245,6 +276,7 @@ Efficient image import:
 ```
 
 --
+
 Audio/video embedding:
 ```html
 <video controls preload="auto" loop autoplay>
@@ -254,6 +286,7 @@ Audio/video embedding:
 </video>
 ```
 
+--
 Supported formats differ between browsers!
 
 ---
@@ -281,9 +314,6 @@ scoping stylesheets, etc.
 
 * other HTML extensions
     * `<mark>`, `<figure>`, `<data>`, `<time>`, `<output>`, `<progress>`, `<main>`, ...
-
---
-
 * new APIs
     * web sockets, push events, offline cache, persistent storage, canvas, webGL, SVG, ...
 
@@ -321,15 +351,21 @@ We'll explore the following:
 
 ## Support
 
-* most features supported in stages (prefixed until stable)
+* staged support of new features (properties are prefixed until stable)
 
     &rarr; just use [autoprefixer](https://github.com/postcss/autoprefixer)
 
 --
 * `@supports` at-rule
 
+    ```css
+    @supports not( ( opacity: 0 ) and ( transition: opacity ease-in ) ) {
+        display: none;
+    }
+    ```
+
 --
-* old browsers are being rapidly dropped
+* old desktop browsers are being rapidly dropped
 
 ---
 
@@ -353,25 +389,30 @@ brings `box-sizing` property with an option to size the `border-box` instead.
 ## Selectors and Pseudo-Elements
 
 * attribute operators: `~=`, `^=`, `$=`, `*=`
-
---
 * position: `:nth-child(3n+2)`, `:nth-of-type(n)`, `:last-child`, `:only-child`,
-    `:only-of-type` (plus `*-last-*` variants), `:root`
-
---
+`:only-of-type` (plus `*-last-*` variants), `:root`
 * UI state: `:enabled`, `:disabled`, `:read-only`, `:read-write`, `:checked`,
-    `:indeterminate`, `:valid`, `:invalid`, `:required`
+`:indeterminate`, `:valid`, `:invalid`, `:required`
 
 --
 * empty node: `:empty`
 * current target: `:target`
-
---
 * negation: `:not`
+* any sibling: `~`
 
 --
-* any sibling: `~`
 * `::` for pseudo-elements (`::before`, `::after`, `::first-line`, ...)
+
+--
+
+```css
+li:not(:first-child):not(:empty) { margin-top: 0.5em; }
+
+a[href^="https://"]::before { content: '-> '; }
+
+.break::after { content: '...'; }
+.break ~ * { display: none; }
+```
 
 ???
 * `:target` references anchor corresponding to current URL
@@ -385,18 +426,20 @@ brings `box-sizing` property with an option to size the `border-box` instead.
     * `unset` sets to `inherit` on inherited properties, `initial` otherwise
 * `all` pseudo-property for blanket reset
 
+<br>
 ```css
 .widget { all: initial; /* ... */ }
 .widget .part { all: unset; /* ... */ }
 ```
 
---
+---
 
 ## New Units
 
 * font-relative: `rem`, `ch`
 * viewport-relative: `vw`, `vh`, `vmax`, `vmin`
 
+<br>
 ```css
 .truncated-text { max-width: 50ch; /* ... */ }
 .fitted-image { max-height: 1vmin; max-width: 1vmin; /* ... */ }
@@ -411,6 +454,8 @@ brings `box-sizing` property with an option to size the `border-box` instead.
 ## Colors
 
 Both colors and whole elements can now be semi-transparent!
+
+--
 
 * `rgb()`, `rgba()`, `hsl()`, `hsla()` notations
 * `transparent` keyword = `rgba(0,0,0,0)`
@@ -604,6 +649,24 @@ screens (any computer screen nowadays). Columns are established using
 
 ---
 
+### Columns: Demo
+
+<div style="-webkit-columns: 3; column-fill: auto; -webkit-column-gap: 10px">
+  <div style="background-color: crimson; height: 500px;">&nbsp;</div>
+  <div style="background-color: burlywood; height: 300px; margin-top: 2px">&nbsp;</div>
+  <div style="background-color: cadetblue; height: 200px; margin-top: 2px">&nbsp;</div>
+</div>
+
+```css
+.container {
+  columns: 3;
+  column-fill: auto;
+  column-gap: 10px;
+}
+```
+
+---
+
 ### Flexbox
 
 Flexbox layout attempts to divide element's real estate proportionally between
@@ -627,9 +690,20 @@ body > main { flex: 1 1 0px; }
 
 ---
 
-### Flexbox: Vocabulary
+### Flexbox: Demo
 
-<img src="./flex_terms.png">
+<div style="display: -webkit-flex; align-items: center">
+  <div style="background-color: crimson; flex: 0.2; height: 200px">&nbsp;</div>
+  <div style="background-color: burlywood; flex: 1; height: 300px; margin-left: 2px">&nbsp;</div>
+  <div style="background-color: cadetblue; flex: 0.3; height: 150px; margin-left: 2px">&nbsp;</div>
+</div>
+
+```css
+.container { display: flex; align-items: center; }
+.item-1 { flex: .2; }
+.item-2 { flex: 1; }
+.item-3 { flex: .3; }
+```
 
 ---
 
@@ -672,21 +746,6 @@ and child properties
 
 ---
 
-## CSS Preprocessors
-
-* basically [Sass](http://sass-lang.com/) (SCSS) or [Less](http://lesscss.org/) these days
-* bring abstractions into stylesheets
-
-    nesting, variables, mixins, imports, operations, functions, control flow, ...
-
-## CSS in JS
-
-* work around inherent CSS problems:
-
-    globals, dead code, non-deterministic resolution, sharing constants
-
----
-
 ## Responsive Layouts
 
 * font-relative & viewport-relative units
@@ -707,6 +766,23 @@ main > aside { order: 3 }
   main > article, main > nav, main > aside { order: 0; }
 }
 ```
+
+---
+
+## CSS Preprocessors
+
+* basically [Sass](http://sass-lang.com/) (SCSS) or [Less](http://lesscss.org/) these days
+* bring abstractions into stylesheets
+
+    nesting, variables, mixins, imports, operations, functions, control flow, ...
+
+## CSS in JS
+
+* work around inherent CSS problems:
+
+    globals, dead code, non-deterministic resolution, sharing constants
+
+    @see [presentation](https://speakerdeck.com/vjeux/react-css-in-js) on Speaker Deck
 
 ---
 template: section-start
@@ -737,11 +813,9 @@ semantic tags + WAI-ARIA
 ---
 template: section-start
 
-&boxtimes;
+<div style="font-size: 1.5em;">&boxtimes;</div>
 
-.footnote[
 Thanks to [MDN](https://developer.mozilla.org/en-US/) and [remark](http://gnab.github.io/remark/#1).
-]
 
     </script>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
